@@ -1,0 +1,4 @@
+C:/develop/skillbox/PracticeClion/Practice-24.5/cmake-build-debug/CMakeFiles/Practice_24_5_1.dir
+C:/develop/skillbox/PracticeClion/Practice-24.5/cmake-build-debug/CMakeFiles/Practice_24_5_2.dir
+C:/develop/skillbox/PracticeClion/Practice-24.5/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/develop/skillbox/PracticeClion/Practice-24.5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
