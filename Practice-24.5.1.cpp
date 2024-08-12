@@ -78,7 +78,7 @@ int main() {
     std::string ans;
     do {
         ans = answer();
-        if (ans == "end") end_operation(start, name_task);
+        if (ans == "end" || ans == "exit") end_operation(start, name_task);
         if (ans == "begin") new_operation(start, name_task);
         if (ans == "status") status_task(start, name_task);
     } while (ans != "exit");
