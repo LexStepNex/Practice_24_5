@@ -5,7 +5,12 @@
 #include <string>
 #include <sstream>
 
-bool correct_ans(std::string ans) {
+#define HOUR(time) (time / 3600)
+#define MINUTE(time) ((time / 60) - (HOUR(time) * 60))
+#define SEC(time) (time % 60)
+
+
+bool correct_ans(std::string &ans) {
     if (ans == "begin" || ans == "end" || ans == "status" || ans == "exit")
         return true;
     else {
@@ -35,7 +40,6 @@ void end_operation(std::time_t &start, std::string &name_task) {
     tasks << name_task << " " << result << "\n";
 
     start = 0;
-    finish = 0;
     name_task = "";
 
     tasks.close();
@@ -50,7 +54,7 @@ void new_operation(std::time_t &start, std::string &name_task) {
     start = time(nullptr);
 }
 
-void status_task(std::time_t start, std::string name_task) {
+void status_task(std::time_t start, std::string &name_task) {
     std::ifstream tasks("data_tasks.txt");
 
     std::string str;
@@ -59,12 +63,14 @@ void status_task(std::time_t start, std::string name_task) {
         data_task << str;
 
         std::string name_finish_task;
-        double time_finish_task;
+        time_t time_finish_task;
         data_task >> name_finish_task >> time_finish_task;
 
         std::cout << "The \"" << name_finish_task << "\" task was completed in "
-                  << time_finish_task << " second\n";
-    };
+                  << HOUR(time_finish_task) << " hours "
+                  << MINUTE(time_finish_task) << " minutes "
+                  << SEC(time_finish_task) << " second\n";
+    }
     tasks.close();
 
     if (start != 0) std::cout << "Current task: " << name_task << "\n";
