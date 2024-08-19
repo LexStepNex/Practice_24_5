@@ -62,8 +62,9 @@ int main() {
     }
 
     std::cout << "DING! DING! DING!\n";
-    for (int i = 100; i < 500; i+=75) {
-        Beep( i+300, 250 );
+    for (int i = 100; i < 500; i += 75) {
+        Beep(i + 300, 200);
+        Beep(800 - i, 200);
     }
 
     return 0;
