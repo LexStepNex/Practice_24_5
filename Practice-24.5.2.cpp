@@ -26,16 +26,20 @@ struct calendar {
         std::tm *current = std::localtime(&t);
         std::cout << asctime(current);
 
-        if (birthday.find(current->tm_yday) != birthday.end()) {
-            int size_vec_name = birthday[current->tm_yday].size();
+        //std::cout << "Input current date: ";
+        //std::cin >> std::get_time(current, "%Y/%m/%d");
+
+        int today = current->tm_yday;
+
+        if (birthday.find(today) != birthday.end()) {
+            int size_vec_name = birthday[today].size();
             std::cout << "Today's " << std::put_time(current, "%m/%d") << " birthdays are celebrated: ";
             for (int i = 0; i < size_vec_name; i++) {
-                std::cout << birthday[current->tm_yday][i] << (i == size_vec_name - 1 ? "\n" : ", ");
+                std::cout << birthday[today][i] << (i == size_vec_name - 1 ? "\n" : ", ");
             }
             return;
         }
 
-        int today = current->tm_yday;
         birthday[today].push_back("Today");
         day_by_date[today].push_back(*current);
 
