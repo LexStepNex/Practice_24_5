@@ -6,6 +6,8 @@
 #include <string>
 #include <windows.h>
 
+#define INPUT_ERROR "Error when entering timer value. Use the required format(MM:SS)\n"
+
 bool correct_input(std::string time_str) {
     std::regex time("([0-5]?\\d)(:)([0-5]?\\d)");
     std::cmatch result;
@@ -15,7 +17,7 @@ bool correct_input(std::string time_str) {
         return true;
     }
 
-    std::cerr << "Error when entering timer value. Use the required format(MM:SS)\n";
+    std::cerr << INPUT_ERROR;
     std::cerr << "Try again\n";
 
     return false;
