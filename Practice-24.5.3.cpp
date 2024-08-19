@@ -17,7 +17,7 @@ bool correct_input(std::string time_str) {
         return true;
     }
 
-    std::cerr << INPUT_ERROR;
+    std::cout << INPUT_ERROR;
     std::cerr << "Try again\n";
 
     return false;
