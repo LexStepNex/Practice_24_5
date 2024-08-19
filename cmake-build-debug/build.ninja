@@ -106,6 +106,39 @@ build Practice_24_5_2.exe: CXX_EXECUTABLE_LINKER__Practice_24_5_2_Debug CMakeFil
   TARGET_IMPLIB = libPractice_24_5_2.dll.a
   TARGET_PDB = Practice_24_5_2.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target Practice_24_5_3
+
+
+#############################################
+# Order-only phony target for Practice_24_5_3
+
+build cmake_object_order_depends_target_Practice_24_5_3: phony || CMakeFiles/Practice_24_5_3.dir
+
+build CMakeFiles/Practice_24_5_3.dir/Practice-24.5.3.cpp.obj: CXX_COMPILER__Practice_24_5_3_unscanned_Debug C$:/develop/skillbox/PracticeClion/Practice-24.5/Practice-24.5.3.cpp || cmake_object_order_depends_target_Practice_24_5_3
+  DEP_FILE = CMakeFiles\Practice_24_5_3.dir\Practice-24.5.3.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Practice_24_5_3.dir
+  OBJECT_FILE_DIR = CMakeFiles\Practice_24_5_3.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target Practice_24_5_3
+
+
+#############################################
+# Link the executable Practice_24_5_3.exe
+
+build Practice_24_5_3.exe: CXX_EXECUTABLE_LINKER__Practice_24_5_3_Debug CMakeFiles/Practice_24_5_3.dir/Practice-24.5.3.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\Practice_24_5_3.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = Practice_24_5_3.exe
+  TARGET_IMPLIB = libPractice_24_5_3.dll.a
+  TARGET_PDB = Practice_24_5_3.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -136,6 +169,8 @@ build Practice_24_5_1: phony Practice_24_5_1.exe
 
 build Practice_24_5_2: phony Practice_24_5_2.exe
 
+build Practice_24_5_3: phony Practice_24_5_3.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -144,7 +179,7 @@ build Practice_24_5_2: phony Practice_24_5_2.exe
 #############################################
 # Folder: C:/develop/skillbox/PracticeClion/Practice-24.5/cmake-build-debug
 
-build all: phony Practice_24_5_1.exe Practice_24_5_2.exe
+build all: phony Practice_24_5_1.exe Practice_24_5_2.exe Practice_24_5_3.exe
 
 # =============================================================================
 # Built-in targets
