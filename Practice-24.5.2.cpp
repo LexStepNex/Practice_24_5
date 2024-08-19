@@ -3,7 +3,7 @@
 #include <map>
 #include <vector>
 #include <iomanip>
-#include <fstream>
+#include <sstream>
 #include <regex>
 #include <algorithm>
 
@@ -21,6 +21,17 @@ struct calendar {
         day_by_date[day_year].push_back(date);
     }
 
+    /*
+    void printMap() {
+        for (std::map<int, std::vector<std::string>>::iterator tt = birthday.begin(); tt != birthday.end(); tt++) {
+            int size_vec_name = tt->second.size();
+            std::cout <<"date year: " << std::put_time(&day_by_date[tt->first][0], "%m/%d") << " Birthday: ";
+            for (int i = 0; i < size_vec_name; i++) {
+                std::cout << tt->second[i] << (i == size_vec_name - 1 ? "\n" : ", ");
+            }
+        }
+    }
+    */
     void next_birthday() {
         std::time_t t = time(nullptr);
         std::tm *current = std::localtime(&t);
@@ -43,7 +54,6 @@ struct calendar {
         birthday[today].push_back("Today");
         day_by_date[today].push_back(*current);
 
-        std::cout << "Today: " << today << "\n";
         std::map<int, std::vector<std::string>>::iterator it = birthday.find(today);
 
         it++;
@@ -59,16 +69,6 @@ struct calendar {
 
         birthday.erase(today);
         day_by_date.erase(today);
-
-        /*
-        for (std::map<int, std::vector<std::string>>::iterator tt = birthday.begin(); tt != birthday.end(); tt++) {
-            int size_vec_name = tt->second.size();
-            std::cout <<"date year: " << std::put_time(&day_by_date[tt->first][0], "%m/%d") << " Birthday: ";
-            for (int i = 0; i < size_vec_name; i++) {
-                std::cout << tt->second[i] << (i == size_vec_name - 1 ? "\n" : ", ");
-            }
-        }
-        */
     }
 };
 
