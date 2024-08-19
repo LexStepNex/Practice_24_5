@@ -11,43 +11,60 @@ struct calendar {
     std::map<int, std::vector<std::string>> birthday;
     std::map<int, std::vector<std::tm>> day_by_date;
 
-    void add(int number_day, std::string &name) {
-        birthday[number_day].push_back(name);
+    void add(std::tm date, std::string &name) {
+        int day_year = date.tm_yday;
+        int year = date.tm_year + 1900;
+
+        if (!((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)) && (date.tm_mon > 1)) day_year++;
+
+        birthday[day_year].push_back(name);
+        day_by_date[day_year].push_back(date);
     }
 
     void next_birthday() {
         std::time_t t = time(nullptr);
-        std::tm *local = std::localtime(&t);
-        std::cout << asctime(local);
+        std::tm *current = std::localtime(&t);
+        std::cout << asctime(current);
 
-        if (birthday.find(local->tm_yday) != birthday.end()) {
-            int size_vec_name = birthday[local->tm_yday].size();
-            std::cout << "Today's " << std::put_time(local, "%m/%d") << " birthdays are celebrated: ";
+        if (birthday.find(current->tm_yday) != birthday.end()) {
+            int size_vec_name = birthday[current->tm_yday].size();
+            std::cout << "Today's " << std::put_time(current, "%m/%d") << " birthdays are celebrated: ";
             for (int i = 0; i < size_vec_name; i++) {
-                std::cout << birthday[local->tm_yday][i] << (i == size_vec_name - 1 ? "\n" : ", ");
+                std::cout << birthday[current->tm_yday][i] << (i == size_vec_name - 1 ? "\n" : ", ");
             }
             return;
         }
 
-        int today = local->tm_yday;
+        int today = current->tm_yday;
         birthday[today].push_back("Today");
+        day_by_date[today].push_back(*current);
 
         std::cout << "Today: " << today << "\n";
         std::map<int, std::vector<std::string>>::iterator it = birthday.find(today);
+
         it++;
         if (it == birthday.end()) {
             it = birthday.begin();
         }
 
-        std::cout <<"Next birthday: " << it->first << " " << it->second[0] << "\n";
+        int size_vec_name = it->second.size();
+        std::cout << "Next birthday is " << std::put_time(&day_by_date[it->first][0], "%m/%d") << ". Birthday people: ";
+        for (int i = 0; i < size_vec_name; i++) {
+            std::cout << it->second[i] << (i == size_vec_name - 1 ? "\n" : ", ");
+        }
 
+        birthday.erase(today);
+        day_by_date.erase(today);
+
+        /*
         for (std::map<int, std::vector<std::string>>::iterator tt = birthday.begin(); tt != birthday.end(); tt++) {
             int size_vec_name = tt->second.size();
-            std::cout <<"day in year: " << tt->first << " Birthday: ";
+            std::cout <<"date year: " << std::put_time(&day_by_date[tt->first][0], "%m/%d") << " Birthday: ";
             for (int i = 0; i < size_vec_name; i++) {
                 std::cout << tt->second[i] << (i == size_vec_name - 1 ? "\n" : ", ");
             }
         }
+        */
     }
 };
 
@@ -86,9 +103,9 @@ bool dateControl(std::string date) {
     }
 }
 
-int day_in_year() {
+std::tm date_birthday() {
     std::time_t t = time(nullptr);
-    std::tm *date = localtime(&t);
+    std::tm date = *localtime(&t);
 
     std::string date_str;
     do {
@@ -98,16 +115,8 @@ int day_in_year() {
     std::stringstream buffer;
 
     buffer << date_str;
-    buffer >> std::get_time(date, "%Y/%m/%d");
-
-    std::cout << std::asctime(date);
-
-    int day_year = date->tm_yday;
-    int year = date->tm_year + 1900;
-
-    if (!((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)) && (date->tm_mon > 1)) day_year++;
-    std::cout << "Day in year: " << day_year << "\n";
-    return day_year;
+    buffer >> std::get_time(&date, "%Y/%m/%d");
+    return date;
 }
 
 bool exit(std::string name) {
@@ -128,8 +137,8 @@ int main() {
         std::cin >> name;
         if (!exit(name)) continue;
 
-        int number_day = day_in_year();
-        reminders.add(number_day, name);
+        std::tm date = date_birthday();
+        reminders.add(date, name);
     }
 
     reminders.next_birthday();
