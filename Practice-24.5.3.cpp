@@ -8,7 +8,7 @@
 
 #define INPUT_ERROR "Error when entering timer value. Use the required format(MM:SS)\n"
 
-bool correct_input(std::string time_str) {
+bool correct_input(std::string &time_str) {
     std::regex time("([0-5]?\\d)(:)([0-5]?\\d)");
     std::cmatch result;
 
@@ -48,7 +48,7 @@ int main() {
 
     std::time_t t = std::time(nullptr);
     while (timer.tm_min > 0 || timer.tm_sec > 0) {
-        double d = std::time(nullptr) - t;
+        double d = std::difftime(std::time(nullptr), t);
         if (d >= 1) {
 
             t = std::time(nullptr);
